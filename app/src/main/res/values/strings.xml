@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Github User App</string>
+    <string name="username">Username</string>
+    <string name="name">Name</string>
+    <string name="location">Location</string>
+    <string name="share">Share</string>
+    <string name="repository">Repository</string>
+    <string name="company">Company</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="github_logo">Github Logo</string>
+    <string name="github_user_details">Github User Details</string>
+    <string name="search">search</string>
+    <string name="cari_user">Cari user</string>
+    <string name="link_url">Link Url</string>
+    <string name="email">Email</string>
+    <string name="no_dataList">Tidak ada nama</string>
+    <string name="tab_text_1">Followers</string>
+    <string name="tab_text_2">Following</string>
+    <string name="content_tab_text">This is Tab %1$d</string>
+    <string name="data_user_tidak_ditemukan">Data user tidak ditemukan</string>
+    <string name="no_internet">Tidak ada koneksi internet</string>
+    <string name="no_data">Tidak ada data user</string>
+    <string name="double_click">Tekan lagi untuk keluar</string>
+    <string name="share_to">Share Data Using</string>
+    <string name="favorite">Favorite</string>
+    <string name="dark_mode">Mode Gelap</string>
+    <string name="setting">Setting</string>
+    <string name="about">About</string>
+    <string name="link_ig">https://www.instagram.com/waslim___/?hl=id</string>
+    <string name="link_linkedin">https://www.linkedin.com/in/waslim-a13624231/</string>
+    <string name="link_github">https://github.com/Waslim240</string>
+    <string name="connect_with_me">connect with me :</string>
+    <string name="image_me">image_me</string>
+    <string name="instagram">Instagram</string>
+    <string name="github">Github</string>
+    <string name="linkedin">Linkedin</string>
+    <string name="user_details">User Details</string>
+    <string name="user_favorite">User Favorite</string>
+    <string name="add_favorite"> ditambahkan ke daftar favorite</string>
+    <string name="delete_favorite"> dihapus dari daftar favorite</string>
+    <string name="waslim">Waslim</string>
+    <string name="in_favorite">Anda sudah berada di daftar favorite</string>
+    <string name="no_favorite_yet">Kamu belum menambahkan favorite nih</string>
+</resources>
