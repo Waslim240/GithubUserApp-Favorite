@@ -15,7 +15,6 @@ import waslim.githubuserapp.databinding.ActivityFavoriteBinding
 import waslim.githubuserapp.model.local.Favorite
 import waslim.githubuserapp.viewmodel.UserFavoriteViewModel
 
-
 @AndroidEntryPoint
 class UserFavoriteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFavoriteBinding
