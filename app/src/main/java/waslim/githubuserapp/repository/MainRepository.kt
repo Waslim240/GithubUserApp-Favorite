@@ -6,12 +6,9 @@ import waslim.githubuserapp.network.ApiService
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val apiService: ApiService){
-    suspend fun getUser() : ArrayList<UserItemResponse>{
-        return apiService.getUser()
-    }
+    suspend fun getUser() : ArrayList<UserItemResponse> = apiService.getUser()
 
-    suspend fun searchUserByUsername(username: String) : UserSearchResponse {
-        return apiService.searchUsersByUsername(username)
-    }
+    suspend fun searchUserByUsername(username: String) : UserSearchResponse =
+        apiService.searchUsersByUsername(username)
 
 }

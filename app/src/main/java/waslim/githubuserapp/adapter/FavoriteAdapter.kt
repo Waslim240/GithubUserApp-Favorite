@@ -16,8 +16,10 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
     private var listFavorite: List<Favorite>? = null
 
     fun setOnItemClickCallback(onItemClick: OnItemClickCallback) {
-        this.onItemClickDetails = onItemClick
-        this.onItemClickShareUserData = onItemClick
+        onItemClick.also {
+            onItemClickDetails = it
+            onItemClickShareUserData = onItemClick
+        }
     }
 
     fun setUserDataList(favorite: List<Favorite>) {
@@ -32,21 +34,23 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = listFavorite?.get(position)
         holder.apply {
-            binding.apply {
-                Glide.with(itemView.context)
-                    .load(user?.avatars_url)
-                    .error(R.drawable.ic_baseline_error_24)
-                    .into(ivAvatarsList)
-                tvUsernameList.text = user?.login
-                tvLinkList.text = user?.url
+            itemView.apply {
+                binding.apply {
+                    Glide.with(context)
+                        .load(user?.avatars_url)
+                        .error(R.drawable.ic_baseline_error_24)
+                        .into(ivAvatarsList)
+                    tvUsernameList.text = user?.login
+                    tvLinkList.text = user?.url
 
-                btnShareUserData.setOnClickListener {
-                    onItemClickShareUserData.onItemClickedShare(listFavorite!![adapterPosition])
+                    btnShareUserData.setOnClickListener {
+                        onItemClickShareUserData.onItemClickedShare(listFavorite!![adapterPosition])
+                    }
                 }
-            }
 
-            itemView.setOnClickListener {
-                onItemClickDetails.onItemClickedMoveDetail(listFavorite!![adapterPosition])
+                setOnClickListener {
+                    onItemClickDetails.onItemClickedMoveDetail(listFavorite!![adapterPosition])
+                }
             }
         }
     }

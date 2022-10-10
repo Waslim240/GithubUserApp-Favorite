@@ -34,9 +34,7 @@ class MainActivity : AppCompatActivity() {
     private var doubleBackToExit = false
     private var username: String? = null
     private val mainViewModel by viewModels<MainViewModel>()
-    private val adapterList: UserAdapter by lazy {
-        UserAdapter()
-    }
+    private val adapterList: UserAdapter = UserAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

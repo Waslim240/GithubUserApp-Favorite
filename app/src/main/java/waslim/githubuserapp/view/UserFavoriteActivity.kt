@@ -1,13 +1,12 @@
 package waslim.githubuserapp.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import waslim.githubuserapp.R
@@ -16,13 +15,12 @@ import waslim.githubuserapp.databinding.ActivityFavoriteBinding
 import waslim.githubuserapp.model.local.Favorite
 import waslim.githubuserapp.viewmodel.UserFavoriteViewModel
 
+
 @AndroidEntryPoint
 class UserFavoriteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFavoriteBinding
     private val userFavoriteViewModel by viewModels<UserFavoriteViewModel>()
-    private val adapterFavorite: FavoriteAdapter by lazy {
-        FavoriteAdapter()
-    }
+    private val adapterFavorite: FavoriteAdapter by lazy(::FavoriteAdapter)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,20 +34,19 @@ class UserFavoriteActivity : AppCompatActivity() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu) : Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.option_menu, menu)
+
+        menu.findItem(R.id.search).isVisible = false
+        menu.findItem(R.id.favorite).isVisible = false
+
         return true
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.favorite -> {
-                Toast.makeText(applicationContext, getString(R.string.in_favorite), Toast.LENGTH_SHORT).show()
-                true
-            }
-
             R.id.setting -> {
                 startActivity(Intent(this, DarkModeSettingActivity::class.java))
                 true
@@ -68,17 +65,20 @@ class UserFavoriteActivity : AppCompatActivity() {
     private fun showListFavorite () {
         showLoading(true)
         userFavoriteViewModel.favoriteData.observe(this) {
-            if (it.isNullOrEmpty()) {
-                showLoading(false)
-                binding.apply {
-                    noDataFavorite.visibility = View.VISIBLE
-                    rvUserFavorite.visibility = View.GONE
+            when {
+                it.isNullOrEmpty() -> {
+                    showLoading(false)
+                    binding.apply {
+                        noDataFavorite.visibility = View.VISIBLE
+                        rvUserFavorite.visibility = View.GONE
+                    }
                 }
-            } else {
-                showLoading(false)
-                setRecyclerList()
-                adapterFavorite.setUserDataList(it)
-                adapterFavorite.notifyDataSetChanged()
+                else -> {
+                    showLoading(false)
+                    setRecyclerList()
+                    adapterFavorite.setUserDataList(it)
+                    adapterFavorite.notifyDataSetChanged()
+                }
             }
         }
         userFavoriteViewModel.getAllFavorite()

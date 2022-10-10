@@ -6,20 +6,13 @@ import javax.inject.Inject
 
 class UserFavoriteRepository @Inject constructor(private val favoriteDao: FavoriteDao) {
 
-    suspend fun insertFavorite(favorite: Favorite) {
-        return favoriteDao.insertFavorite(favorite)
-    }
+    suspend fun insertFavorite(favorite: Favorite) = favoriteDao.insertFavorite(favorite)
 
-    suspend fun getAllFavorite() : List<Favorite> {
-        return favoriteDao.getALlFavorite()
-    }
+    suspend fun getAllFavorite() : List<Favorite> = favoriteDao.getALlFavorite()
 
-    suspend fun getFavoriteByUsername(username: String) : Favorite {
-        return favoriteDao.getFavoriteByUsername(username)
-    }
+    suspend fun getFavoriteByUsername(username: String) : Favorite =
+        favoriteDao.getFavoriteByUsername(username)
 
-    suspend fun deleteFavorite(favorite: Favorite) {
-        return favoriteDao.deleteFavorite(favorite)
-    }
+    suspend fun deleteFavorite(favorite: Favorite) = favoriteDao.deleteFavorite(favorite)
 
 }

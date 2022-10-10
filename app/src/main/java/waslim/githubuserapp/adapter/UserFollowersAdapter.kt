@@ -17,8 +17,10 @@ class UserFollowersAdapter : RecyclerView.Adapter<UserFollowersAdapter.ViewHolde
     }
 
     fun setUserDataFollowers(items: ArrayList<UserFollowResponse>) {
-        listFollowers.clear()
-        listFollowers.addAll(items)
+        listFollowers.run {
+            clear()
+            addAll(items)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,16 +31,18 @@ class UserFollowersAdapter : RecyclerView.Adapter<UserFollowersAdapter.ViewHolde
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = listFollowers[position]
         holder.apply {
-            binding.apply {
-                Glide.with(itemView.context)
-                    .load(user.avatarUrl)
-                    .error(R.drawable.ic_baseline_error_24)
-                    .into(ivAvatarsList)
-                tvUsernameList.text = user.login
-                tvLinkList.text = user.htmlUrl
+            itemView.apply {
+                binding.apply {
+                    Glide.with(context)
+                        .load(user.avatarUrl)
+                        .error(R.drawable.ic_baseline_error_24)
+                        .into(ivAvatarsList)
+                    tvUsernameList.text = user.login
+                    tvLinkList.text = user.htmlUrl
 
-                btnShareUserData.setOnClickListener {
-                    onItemClickShareUserData.onItemClickedShare(listFollowers[adapterPosition])
+                    btnShareUserData.setOnClickListener {
+                        onItemClickShareUserData.onItemClickedShare(listFollowers[adapterPosition])
+                    }
                 }
             }
         }

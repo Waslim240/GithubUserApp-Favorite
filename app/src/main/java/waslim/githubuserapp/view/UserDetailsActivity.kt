@@ -3,9 +3,12 @@ package waslim.githubuserapp.view
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -58,6 +61,33 @@ class UserDetailsActivity : AppCompatActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.option_menu, menu)
+
+        menu.findItem(R.id.search).isVisible = false
+        menu.findItem(R.id.favorite).isVisible = false
+
+        return true
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.setting -> {
+                startActivity(Intent(this, DarkModeSettingActivity::class.java))
+                true
+            }
+
+            R.id.about -> {
+                startActivity(Intent(this, AboutActivity::class.java))
+                true
+            }
+
+            else -> true
+        }
+    }
+
 
     private fun setDataDetailsUser(username: String) {
         userDetailsViewModel.detailUser.observe(this){ UserDetailsResponse ->
@@ -87,8 +117,8 @@ class UserDetailsActivity : AppCompatActivity() {
 
     private fun checkUsername(username: String) {
         userFavoriteViewModel.favoriteDataByUsername.observe(this) {
-            if (it?.login == username) {
-                checkUsername = true
+            when (it?.login) {
+                username -> checkUsername = true
             }
         }
         userFavoriteViewModel.getFavoriteByUsername(username)
@@ -118,11 +148,13 @@ class UserDetailsActivity : AppCompatActivity() {
                         .setSubText(getString(R.string.favorite))
                         .setAutoCancel(true)
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-                        channel.description = CHANNEL_NAME
-                        mBuilder.setChannelId(CHANNEL_ID)
-                        mNotificationManager.createNotificationChannel(channel)
+                    when {
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+                            channel.description = CHANNEL_NAME
+                            mBuilder.setChannelId(CHANNEL_ID)
+                            mNotificationManager.createNotificationChannel(channel)
+                        }
                     }
 
                     val notification = mBuilder.build()
@@ -148,11 +180,13 @@ class UserDetailsActivity : AppCompatActivity() {
                         .setSubText(getString(R.string.favorite))
                         .setAutoCancel(true)
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-                        channel.description = CHANNEL_NAME
-                        mBuilder.setChannelId(CHANNEL_ID)
-                        mNotificationManager.createNotificationChannel(channel)
+                    when {
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+                            channel.description = CHANNEL_NAME
+                            mBuilder.setChannelId(CHANNEL_ID)
+                            mNotificationManager.createNotificationChannel(channel)
+                        }
                     }
 
                     val notification = mBuilder.build()

@@ -14,13 +14,17 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     private val listUsers = ArrayList<UserItemResponse>()
 
     fun setOnItemClickCallback(onItemClick: OnItemClickCallback) {
-        this.onItemClickDetails = onItemClick
-        this.onItemClickShareUserData = onItemClick
+        onItemClick.also {
+            onItemClickDetails = it
+            onItemClickShareUserData = onItemClick
+        }
     }
 
     fun setUserDataList(userItemResponses: ArrayList<UserItemResponse>) {
-        listUsers.clear()
-        listUsers.addAll(userItemResponses)
+        listUsers.run {
+            clear()
+            addAll(userItemResponses)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,21 +35,23 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = listUsers[position]
         holder.apply {
-            binding.apply {
-                Glide.with(itemView.context)
-                    .load(user.avatarUrl)
-                    .error(R.drawable.ic_baseline_error_24)
-                    .into(ivAvatarsList)
-                tvUsernameList.text = user.login
-                tvLinkList.text = user.htmlUrl
+            itemView.apply {
+                binding.apply {
+                    Glide.with(context)
+                        .load(user.avatarUrl)
+                        .error(R.drawable.ic_baseline_error_24)
+                        .into(ivAvatarsList)
+                    tvUsernameList.text = user.login
+                    tvLinkList.text = user.htmlUrl
 
-                btnShareUserData.setOnClickListener {
-                    onItemClickShareUserData.onItemClickedShare(listUsers[adapterPosition])
+                    btnShareUserData.setOnClickListener {
+                        onItemClickShareUserData.onItemClickedShare(listUsers[adapterPosition])
+                    }
                 }
-            }
 
-            itemView.setOnClickListener {
-                onItemClickDetails.onItemClickedMoveDetail(listUsers[adapterPosition])
+                setOnClickListener {
+                    onItemClickDetails.onItemClickedMoveDetail(listUsers[adapterPosition])
+                }
             }
         }
     }

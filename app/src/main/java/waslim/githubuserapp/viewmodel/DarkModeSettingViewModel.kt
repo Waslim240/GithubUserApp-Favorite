@@ -12,9 +12,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DarkModeSettingViewModel @Inject constructor(private val darkModeSettingRepository: DarkModeSettingRepository) : ViewModel() {
 
-    fun getThemeSetting(): LiveData<Boolean> {
-        return darkModeSettingRepository.getThemeSetting().asLiveData()
-    }
+    fun getThemeSetting(): LiveData<Boolean> =
+        darkModeSettingRepository.getThemeSetting().asLiveData()
 
     fun setThemeSetting(isDarkModeActive: Boolean) {
         viewModelScope.launch {

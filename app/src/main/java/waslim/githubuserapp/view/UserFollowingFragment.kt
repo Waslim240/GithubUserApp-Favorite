@@ -21,9 +21,7 @@ class UserFollowingFragment : Fragment() {
     private var _binding: FragmentUserFollowingBinding? = null
     private val binding get() = _binding!!
     private val userFollowingViewModel by viewModels<UserFollowingViewModel>()
-    private val userFollowingAdapter: UserFollowingAdapter by lazy {
-        UserFollowingAdapter()
-    }
+    private val userFollowingAdapter: UserFollowingAdapter by lazy(::UserFollowingAdapter)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,10 +46,12 @@ class UserFollowingFragment : Fragment() {
     private fun showRecyclerList(username: String) {
         showLoading(true)
         userFollowingViewModel.dataFollowing.observe(viewLifecycleOwner) {
-            if (it != null) {
-                userFollowingAdapter.setUserDataFollowing(it)
-                setRecyclerList()
-                showLoading(false)
+            when {
+                it != null -> {
+                    userFollowingAdapter.setUserDataFollowing(it)
+                    setRecyclerList()
+                    showLoading(false)
+                }
             }
         }
         userFollowingViewModel.getFollowing(username)

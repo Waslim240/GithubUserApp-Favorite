@@ -24,11 +24,9 @@ object AppModule {
 
     private const val URL = BuildConfig.BASE_URL
 
-    private val loggingInterceptor = if(BuildConfig.DEBUG) {
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    }
-    else {
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+    private val loggingInterceptor = when {
+        BuildConfig.DEBUG -> HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        else -> HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
     }
 
     private val client = OkHttpClient
@@ -46,31 +44,28 @@ object AppModule {
             .client(client)
             .build()
 
+
     @Singleton
     @Provides
     fun provideGithubUserApi(retrofit: Retrofit) : ApiService =
         retrofit.create(ApiService::class.java)
 
 
-
     @Singleton
     @Provides
-    fun providesFavoriteDatabase(context: Application) : FavoriteDatabase {
-        return FavoriteDatabase.getDatabase(context)
-    }
-
-    @Singleton
-    @Provides
-    fun providesFavoriteDao(favoriteDatabase: FavoriteDatabase) : FavoriteDao {
-        return favoriteDatabase.favoriteDao()
-    }
-
+    fun providesFavoriteDatabase(context: Application) : FavoriteDatabase =
+        FavoriteDatabase.getDatabase(context)
 
 
     @Singleton
     @Provides
-    fun providesDarkMode(@ApplicationContext context: Context) : DarkModeSettingPreferences {
-        return DarkModeSettingPreferences(context)
-    }
+    fun providesFavoriteDao(favoriteDatabase: FavoriteDatabase) : FavoriteDao =
+        favoriteDatabase.favoriteDao()
+
+
+    @Singleton
+    @Provides
+    fun providesDarkMode(@ApplicationContext context: Context) : DarkModeSettingPreferences =
+        DarkModeSettingPreferences(context)
 
 }

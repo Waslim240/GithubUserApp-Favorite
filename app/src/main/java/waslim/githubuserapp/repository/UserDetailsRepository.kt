@@ -5,7 +5,6 @@ import waslim.githubuserapp.network.ApiService
 import javax.inject.Inject
 
 class UserDetailsRepository @Inject constructor(private val apiService: ApiService){
-    suspend fun getDetailsUser(username: String) : UserDetailsResponse {
-        return apiService.getDetailsUser(username)
-    }
+    suspend fun getDetailsUser(username: String) : UserDetailsResponse =
+        apiService.getDetailsUser(username)
 }
