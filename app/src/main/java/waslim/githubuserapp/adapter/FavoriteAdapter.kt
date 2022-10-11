@@ -18,7 +18,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
     fun setOnItemClickCallback(onItemClick: OnItemClickCallback) {
         onItemClick.also {
             onItemClickDetails = it
-            onItemClickShareUserData = onItemClick
+            onItemClickShareUserData = it
         }
     }
 

@@ -34,16 +34,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
         android:layout_marginTop="45dp"
-        android:textSize="20sp"
-        android:textColor="@color/red_300"
-        android:textStyle="italic"
-        android:text="@string/no_favorite_yet"
+        android:layout_marginEnd="15dp"
         android:gravity="center"
+        android:text="@string/no_favorite_yet"
+        android:textColor="#009688"
+        android:textSize="20sp"
+        android:textStyle="italic"
         android:visibility="visible"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

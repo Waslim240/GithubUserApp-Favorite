@@ -39,22 +39,34 @@ class UserFavoriteViewModel @Inject constructor(private val userFavoriteReposito
 
     fun getFavoriteByUsername(username: String) {
         viewModelScope.launch {
-            val dataFavoriteByUsername = userFavoriteRepository.getFavoriteByUsername(username)
-            _favoriteDataByUsername.value = dataFavoriteByUsername
+            try {
+                val dataFavoriteByUsername = userFavoriteRepository.getFavoriteByUsername(username)
+                _favoriteDataByUsername.value = dataFavoriteByUsername
+            } catch (e: Exception) {
+                Log.e(TAG, "onFailure: ${e.message.toString()}")
+            }
         }
     }
 
 
     fun insertFavorite(favorite: Favorite) {
         viewModelScope.launch {
-            userFavoriteRepository.insertFavorite(favorite)
+            try {
+                userFavoriteRepository.insertFavorite(favorite)
+            } catch (e: Exception) {
+                Log.e(TAG, "onFailure: ${e.message.toString()}")
+            }
         }
     }
 
 
     fun deleteFavorite(favorite: Favorite) {
         viewModelScope.launch {
-            userFavoriteRepository.deleteFavorite(favorite)
+            try {
+                userFavoriteRepository.deleteFavorite(favorite)
+            } catch (e: Exception) {
+                Log.e(TAG, "onFailure: ${e.message.toString()}")
+            }
         }
     }
 

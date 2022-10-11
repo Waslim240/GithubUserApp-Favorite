@@ -16,7 +16,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
     fun setOnItemClickCallback(onItemClick: OnItemClickCallback) {
         onItemClick.also {
             onItemClickDetails = it
-            onItemClickShareUserData = onItemClick
+            onItemClickShareUserData = it
         }
     }
 
