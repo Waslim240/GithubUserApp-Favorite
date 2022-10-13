@@ -1,4 +1,4 @@
-package waslim.githubuserapp.view
+package waslim.githubuserapp.view.activity
 
 import android.app.SearchManager
 import android.content.Context
@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                             binding.apply {
                                 rvUser.visibility = View.GONE
                                 noData.visibility = View.VISIBLE
+                                noDataUser.visibility = View.VISIBLE
                             }
                             closedKeyboard()
                         }
@@ -189,6 +190,7 @@ class MainActivity : AppCompatActivity() {
             rvUser.layoutManager = LinearLayoutManager(applicationContext)
             rvUser.adapter = adapterList
             noData.visibility = View.GONE
+            noDataUser.visibility = View.GONE
             rvUser.visibility = View.VISIBLE
             rvUser.setHasFixedSize(true)
         }

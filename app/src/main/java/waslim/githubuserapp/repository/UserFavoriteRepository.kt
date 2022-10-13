@@ -1,7 +1,7 @@
 package waslim.githubuserapp.repository
 
 import waslim.githubuserapp.model.local.Favorite
-import waslim.githubuserapp.model.local.FavoriteDao
+import waslim.githubuserapp.model.service.FavoriteDao
 import javax.inject.Inject
 
 class UserFavoriteRepository @Inject constructor(private val favoriteDao: FavoriteDao) {

@@ -1,7 +1,7 @@
 package waslim.githubuserapp.repository
 
 import waslim.githubuserapp.model.api.datadetail.UserDetailsResponse
-import waslim.githubuserapp.network.ApiService
+import waslim.githubuserapp.model.service.ApiService
 import javax.inject.Inject
 
 class UserDetailsRepository @Inject constructor(private val apiService: ApiService){

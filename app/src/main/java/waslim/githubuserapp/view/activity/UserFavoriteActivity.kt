@@ -1,4 +1,4 @@
-package waslim.githubuserapp.view
+package waslim.githubuserapp.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -69,6 +69,7 @@ class UserFavoriteActivity : AppCompatActivity() {
                     showLoading(false)
                     binding.apply {
                         noDataFavorite.visibility = View.VISIBLE
+                        noDataUserFavorite.visibility = View.VISIBLE
                         rvUserFavorite.visibility = View.GONE
                     }
                 }
@@ -96,6 +97,7 @@ class UserFavoriteActivity : AppCompatActivity() {
         binding.apply {
             rvUserFavorite.visibility = View.VISIBLE
             noDataFavorite.visibility = View.INVISIBLE
+            noDataUserFavorite.visibility = View.INVISIBLE
             rvUserFavorite.layoutManager = LinearLayoutManager(applicationContext)
             rvUserFavorite.adapter = adapterFavorite
             rvUserFavorite.setHasFixedSize(true)

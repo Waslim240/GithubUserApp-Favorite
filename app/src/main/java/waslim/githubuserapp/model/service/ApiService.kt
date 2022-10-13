@@ -1,4 +1,4 @@
-package waslim.githubuserapp.network
+package waslim.githubuserapp.model.service
 
 import retrofit2.http.GET
 import retrofit2.http.Headers

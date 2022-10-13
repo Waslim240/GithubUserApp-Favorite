@@ -13,9 +13,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import waslim.githubuserapp.BuildConfig
 import waslim.githubuserapp.model.datastore.DarkModeSettingPreferences
-import waslim.githubuserapp.model.local.FavoriteDao
+import waslim.githubuserapp.model.service.FavoriteDao
 import waslim.githubuserapp.model.local.FavoriteDatabase
-import waslim.githubuserapp.network.ApiService
+import waslim.githubuserapp.model.service.ApiService
 import javax.inject.Singleton
 
 @Module

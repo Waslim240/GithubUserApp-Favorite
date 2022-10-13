@@ -1,6 +1,7 @@
-package waslim.githubuserapp.model.local
+package waslim.githubuserapp.model.service
 
 import androidx.room.*
+import waslim.githubuserapp.model.local.Favorite
 
 @Dao
 interface FavoriteDao {

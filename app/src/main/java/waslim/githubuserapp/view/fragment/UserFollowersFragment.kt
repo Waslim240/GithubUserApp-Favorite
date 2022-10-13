@@ -1,4 +1,4 @@
-package waslim.githubuserapp.view
+package waslim.githubuserapp.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,25 +9,26 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import waslim.githubuserapp.adapter.UserFollowingAdapter
-import waslim.githubuserapp.databinding.FragmentUserFollowingBinding
+import waslim.githubuserapp.R
+import waslim.githubuserapp.adapter.UserFollowersAdapter
+import waslim.githubuserapp.databinding.FragmentUserFollowersBinding
 import waslim.githubuserapp.model.api.datafollow.UserFollowResponse
 import waslim.githubuserapp.model.api.datasearch.UserItemResponse
 import waslim.githubuserapp.model.local.Favorite
-import waslim.githubuserapp.viewmodel.UserFollowingViewModel
+import waslim.githubuserapp.viewmodel.UserFollowersViewModel
 
 @AndroidEntryPoint
-class UserFollowingFragment : Fragment() {
-    private var _binding: FragmentUserFollowingBinding? = null
+class UserFollowersFragment : Fragment() {
+    private var _binding: FragmentUserFollowersBinding? = null
     private val binding get() = _binding!!
-    private val userFollowingViewModel by viewModels<UserFollowingViewModel>()
-    private val userFollowingAdapter: UserFollowingAdapter by lazy(::UserFollowingAdapter)
+    private val userFollowersViewModel by viewModels<UserFollowersViewModel>()
+    private val userFollowersAdapter: UserFollowersAdapter by lazy(::UserFollowersAdapter)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentUserFollowingBinding.inflate(inflater, container, false)
+        _binding = FragmentUserFollowersBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -45,30 +46,29 @@ class UserFollowingFragment : Fragment() {
 
     private fun showRecyclerList(username: String) {
         showLoading(true)
-        userFollowingViewModel.dataFollowing.observe(viewLifecycleOwner) {
+        userFollowersViewModel.dataFollowers.observe(viewLifecycleOwner) {
             when {
                 it != null -> {
-                    userFollowingAdapter.setUserDataFollowing(it)
+                    userFollowersAdapter.setUserDataFollowers(it)
                     setRecyclerList()
                     showLoading(false)
                 }
             }
         }
-        userFollowingViewModel.getFollowing(username)
+        userFollowersViewModel.getFollowers(username)
     }
 
     private fun setRecyclerList() {
         binding.apply {
-            rvFollowing.layoutManager = LinearLayoutManager(requireContext())
-            rvFollowing.adapter = userFollowingAdapter
-            rvFollowing.setHasFixedSize(true)
+            rvFollowers.layoutManager = LinearLayoutManager(requireContext())
+            rvFollowers.adapter = userFollowersAdapter
+            rvFollowers.setHasFixedSize(true)
         }
 
-        userFollowingAdapter.setOnItemClickCallback(object : UserFollowingAdapter.OnItemClickCallback{
+        userFollowersAdapter.setOnItemClickCallback(object : UserFollowersAdapter.OnItemClickCallback{
             override fun onItemClickedShare(dataUsers: UserFollowResponse) {
                 shareUserData(dataUsers)
             }
-
         })
     }
 
@@ -81,13 +81,13 @@ class UserFollowingFragment : Fragment() {
                 putExtra(Intent.EXTRA_TEXT, shareUserData)
                 type = "text/plain"
             }
-        Intent.createChooser(share, "Share Data Using").apply {
+        Intent.createChooser(share, getString(R.string.share_to)).apply {
             startActivity(this)
         }
     }
 
-    private fun showLoading(isLoading: Boolean) = userFollowingViewModel.isLoading.observe(viewLifecycleOwner){
-        binding.progressBarFollowing.visibility = if (isLoading) View.VISIBLE else View.GONE
+    private fun showLoading(isLoading: Boolean) = userFollowersViewModel.isLoading.observe(viewLifecycleOwner){
+        binding.progressBarFollowers.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {
@@ -99,5 +99,4 @@ class UserFollowingFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 }

@@ -19,16 +19,16 @@
         android:theme="@style/Theme.GitHubUserApp"
         tools:targetApi="31">
         <activity
-            android:name=".view.AboutActivity"
+            android:name=".view.activity.AboutActivity"
             android:exported="true" />
         <activity
-            android:name=".view.DarkModeSettingActivity"
+            android:name=".view.activity.DarkModeSettingActivity"
             android:exported="true" />
         <activity
-            android:name=".view.UserFavoriteActivity"
+            android:name=".view.activity.UserFavoriteActivity"
             android:exported="true" />
         <activity
-            android:name=".view.SplashScreenActivity"
+            android:name=".view.activity.SplashScreenActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
@@ -38,10 +38,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.UserDetailsActivity"
+            android:name=".view.activity.UserDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true"
             android:launchMode="singleTop">

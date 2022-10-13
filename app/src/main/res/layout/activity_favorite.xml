@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.UserFavoriteActivity">
+    tools:context=".view.activity.UserFavoriteActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUser_Favorite"
@@ -29,21 +29,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/no_data_favorite"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="45dp"
         android:layout_marginEnd="15dp"
-        android:gravity="center"
-        android:text="@string/no_favorite_yet"
-        android:textColor="#009688"
-        android:textSize="20sp"
-        android:textStyle="italic"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/no_data"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/no_data_user_favorite"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/no_favorite_yet"
+        android:textColor="@color/teal_200"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/no_data_favorite"
+        app:layout_constraintStart_toStartOf="@+id/no_data_favorite"
+        app:layout_constraintTop_toBottomOf="@+id/no_data_favorite" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

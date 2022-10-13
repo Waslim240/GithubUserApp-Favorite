@@ -1,4 +1,4 @@
-package waslim.githubuserapp.view
+package waslim.githubuserapp.view.activity
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -47,12 +47,12 @@ class UserDetailsActivity : AppCompatActivity() {
             dataUser?.login != null -> {
                 setDataDetailsUser(dataUser.login)
                 checkUsername(dataUser.login)
-                insertDeleteFavorite(dataUser.id, dataUser.login, dataUser.htmlUrl, dataUser.avatarUrl)
+                actionFab(dataUser.id, dataUser.login, dataUser.htmlUrl, dataUser.avatarUrl)
             }
             dataUserFavorite?.login != null -> {
                 setDataDetailsUser(dataUserFavorite.login)
                 checkUsername(dataUserFavorite.login)
-                insertDeleteFavorite(dataUserFavorite.id, dataUserFavorite.login, dataUserFavorite.url, dataUserFavorite.avatars_url)
+                actionFab(dataUserFavorite.id, dataUserFavorite.login, dataUserFavorite.url, dataUserFavorite.avatars_url)
             }
         }
 
@@ -114,7 +114,6 @@ class UserDetailsActivity : AppCompatActivity() {
     }
 
 
-
     private fun checkUsername(username: String) {
         userFavoriteViewModel.favoriteDataByUsername.observe(this) {
             when (it?.login) {
@@ -125,74 +124,75 @@ class UserDetailsActivity : AppCompatActivity() {
     }
 
 
-    private fun insertDeleteFavorite(id: Int?, username: String?, htmlUrl: String?, avatarUrl: String?) {
+    private fun actionFab(id: Int?, username: String?, htmlUrl: String?, avatarUrl: String?) {
         binding.fabFavorite.setOnClickListener {
+            insertAndDeleteFavorite(id, username, htmlUrl, avatarUrl)
+            notificationAction(username)
+        }
+    }
+
+
+    private fun insertAndDeleteFavorite(id: Int?, username: String?, htmlUrl: String?, avatarUrl: String?) =  when {
+        !checkUsername -> {
+            userFavoriteViewModel.insertFavorite(
+                Favorite(id, username, htmlUrl, avatarUrl)
+            )
+            Toast.makeText(this, "$username " +getString(R.string.add_favorite) , Toast.LENGTH_LONG).show()
+            checkUsername = true
+        }
+
+        else -> {
+            userFavoriteViewModel.deleteFavorite(
+                Favorite(id, username, htmlUrl, avatarUrl)
+            )
+            Toast.makeText(this, "$username " +getString(R.string.delete_favorite), Toast.LENGTH_LONG).show()
+            checkUsername = false
+        }
+    }
+
+
+    private fun notificationAction(username: String?) = when {
+        checkUsername -> {
+            val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                .setContentTitle(getString(R.string.user_favorite))
+                .setContentText("$username " +getString(R.string.add_favorite))
+                .setSubText(getString(R.string.favorite))
+                .setAutoCancel(true)
+
             when {
-                !checkUsername -> {
-                    userFavoriteViewModel.insertFavorite(
-                        Favorite(
-                            id,
-                            username,
-                            htmlUrl,
-                            avatarUrl
-                        )
-                    )
-                    Toast.makeText(this, "$username " +getString(R.string.add_favorite) , Toast.LENGTH_LONG).show()
-                    checkUsername = true
-
-                    val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    val mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                        .setContentTitle(getString(R.string.user_favorite))
-                        .setContentText("$username " +getString(R.string.add_favorite))
-                        .setSubText(getString(R.string.favorite))
-                        .setAutoCancel(true)
-
-                    when {
-                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
-                            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-                            channel.description = CHANNEL_NAME
-                            mBuilder.setChannelId(CHANNEL_ID)
-                            mNotificationManager.createNotificationChannel(channel)
-                        }
-                    }
-
-                    val notification = mBuilder.build()
-                    mNotificationManager.notify(NOTIFICATION_ID, notification)
-                }
-                else -> {
-                    userFavoriteViewModel.deleteFavorite(
-                        Favorite(
-                            id,
-                            username,
-                            htmlUrl,
-                            avatarUrl
-                        )
-                    )
-                    Toast.makeText(this, "$username " +getString(R.string.delete_favorite), Toast.LENGTH_LONG).show()
-                    checkUsername = false
-
-                    val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    val mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                        .setContentTitle(getString(R.string.user_favorite))
-                        .setContentText("$username " +getString(R.string.delete_favorite))
-                        .setSubText(getString(R.string.favorite))
-                        .setAutoCancel(true)
-
-                    when {
-                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
-                            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
-                            channel.description = CHANNEL_NAME
-                            mBuilder.setChannelId(CHANNEL_ID)
-                            mNotificationManager.createNotificationChannel(channel)
-                        }
-                    }
-
-                    val notification = mBuilder.build()
-                    mNotificationManager.notify(NOTIFICATION_ID, notification)
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                    val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+                    channel.description = CHANNEL_NAME
+                    mBuilder.setChannelId(CHANNEL_ID)
+                    mNotificationManager.createNotificationChannel(channel)
                 }
             }
+
+            val notification = mBuilder.build()
+            mNotificationManager.notify(NOTIFICATION_ID, notification)
+        }
+        else -> {
+            val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                .setContentTitle(getString(R.string.user_favorite))
+                .setContentText("$username " +getString(R.string.delete_favorite))
+                .setSubText(getString(R.string.favorite))
+                .setAutoCancel(true)
+
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                    val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+                    channel.description = CHANNEL_NAME
+                    mBuilder.setChannelId(CHANNEL_ID)
+                    mNotificationManager.createNotificationChannel(channel)
+                }
+            }
+
+            val notification = mBuilder.build()
+            mNotificationManager.notify(NOTIFICATION_ID, notification)
         }
     }
 

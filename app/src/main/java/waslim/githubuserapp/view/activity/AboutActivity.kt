@@ -1,4 +1,4 @@
-package waslim.githubuserapp.view
+package waslim.githubuserapp.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

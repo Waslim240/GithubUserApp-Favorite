@@ -3,8 +3,8 @@ package waslim.githubuserapp.adapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import waslim.githubuserapp.view.UserFollowersFragment
-import waslim.githubuserapp.view.UserFollowingFragment
+import waslim.githubuserapp.view.fragment.UserFollowersFragment
+import waslim.githubuserapp.view.fragment.UserFollowingFragment
 
 class SectionsPagerFollow(activity: AppCompatActivity): FragmentStateAdapter(activity) {
     override fun getItemCount() = 2

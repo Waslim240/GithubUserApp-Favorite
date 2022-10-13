@@ -1,4 +1,4 @@
-package waslim.githubuserapp.view
+package waslim.githubuserapp.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,6 +20,22 @@ class DarkModeSettingActivity : AppCompatActivity() {
         setContentView(binding.root)
         this.title = getString(R.string.setting)
 
+        setThemeSetting()
+        getThemeSetting()
+    }
+
+
+    private fun setThemeSetting() {
+        binding.apply {
+            switchModeDark.setOnCheckedChangeListener { _, isChecked ->
+                switchModeDark.isChecked = isChecked
+                darkModeSettingViewModel.setThemeSetting(isChecked)
+            }
+        }
+    }
+
+
+    private fun getThemeSetting() {
         binding.apply {
             darkModeSettingViewModel.getThemeSetting().observe(this@DarkModeSettingActivity) {
                 if (it) {
@@ -31,10 +47,8 @@ class DarkModeSettingActivity : AppCompatActivity() {
                 }
             }
 
-            switchModeDark.setOnCheckedChangeListener { _, isChecked ->
-                switchModeDark.isChecked = isChecked
-                darkModeSettingViewModel.setThemeSetting(isChecked)
-            }
+
         }
     }
+
 }

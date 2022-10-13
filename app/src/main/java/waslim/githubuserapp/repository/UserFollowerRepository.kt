@@ -1,7 +1,7 @@
 package waslim.githubuserapp.repository
 
 import waslim.githubuserapp.model.api.datafollow.UserFollowResponse
-import waslim.githubuserapp.network.ApiService
+import waslim.githubuserapp.model.service.ApiService
 import javax.inject.Inject
 
 class UserFollowerRepository @Inject constructor(private val apiService: ApiService){
